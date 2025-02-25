@@ -12,9 +12,9 @@ public class Game {
     public Game()
     {
         this.board = new Board();
+        this.turn = 0;
         this.player1 = new Player('W');
         this.player2 = new Player('B');
-        this.turn = 0;
         new ChessGUI(this);
 
     }
@@ -63,6 +63,42 @@ public class Game {
         return false; 
     }
 
+    public boolean isCheckmate(char kingColor) {
+
+        Square[][] squares = board.getSquares();
+
+        for (int i = 0; i < 8; i++) {
+            for (int j = 0; j < 8; j++) {
+                Piece piece = squares[i][j].getPiece();
+                if (piece != null && piece.getColor() != kingColor) {
+                    for (int x = 0; x < 8; x++) {
+                        for (int y = 0; y < 8; y++) {
+                            if (piece.isValidMove(i, j, x, y, board)) {
+                                Piece capturedPiece = board.getSquares()[x][y].getPiece();
+                                board.movePiece(i, j, x, y, board);
+
+                                boolean stillInCheck = isKingInCheck(kingColor);
+
+                                board.getSquares()[x][y].setPiece(capturedPiece);
+                                board.getSquares()[i][j].setPiece(piece);
+
+                                if (!stillInCheck) {
+                                    return false; 
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+    return true;
+}
+    public void reset()
+    {
+        this.board = new Board();
+        this.turn = 0;
+    }
 
     public Board getBoard() {
         return board;
