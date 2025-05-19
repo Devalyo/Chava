@@ -26,6 +26,13 @@ public class Knight extends Piece {
         Piece destinationPiece = squares[x2][y2].getPiece();
         return destinationPiece == null || destinationPiece.getColor() != this.getColor();
     }
+
+
+    @Override
+    public Piece clone() {
+        Knight copy = new Knight(this.color);
+        return copy;
+    }
 }
     
 

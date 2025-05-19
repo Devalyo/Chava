@@ -25,6 +25,12 @@ public class King extends Piece {
         return destinationPiece == null || destinationPiece.getColor() != this.getColor();
     }
 
+    @Override
+    public Piece clone() {
+        King copy = new King(this.color);
+        return copy;
+    }
+
 
 
     

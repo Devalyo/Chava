@@ -63,6 +63,48 @@ public class Game {
         return false; 
     }
 
+
+    public boolean isKingInCheck(char kingColor, Board boardCopy) {
+        Square[][] squares = boardCopy.getSquares();
+
+        int kingX = -1, kingY = -1;
+        boolean kingFound = false;
+
+        for (int i = 0; i < 8 && !kingFound; i++) {
+
+            for (int j = 0; j < 8; j++) {
+
+                Piece piece = squares[i][j].getPiece();
+                if (piece != null && piece instanceof King && piece.getColor() == kingColor) {
+                    kingX = i;
+                    kingY = j;
+                    kingFound = true;
+                    System.out.println("King in" + kingX + "and" + kingY);
+                    break;
+                }
+
+            }
+        }
+
+        char opponentColor = (kingColor == 'W') ? 'B' : 'W';
+        for (int i = 0; i < 8; i++) {
+
+            for (int j = 0; j < 8; j++) {
+
+                Piece piece = squares[i][j].getPiece();
+                if (piece != null && piece.getColor() == opponentColor) {
+                    if (piece.isValidMove(i, j, kingX, kingY, board)) {
+                        System.out.println(piece.getName() + " em " + i + " " + j + " atacando o rei");
+                        return true; 
+                    }
+                }
+            }
+
+        }
+
+        return false; 
+    }
+
     public boolean isCheckmate(char kingColor) {
 
         Square[][] squares = board.getSquares();

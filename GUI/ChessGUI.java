@@ -83,20 +83,38 @@ public class ChessGUI extends JFrame {
             
             if(squares[row][col].getBackground() == green)
             {
-                board.movePiece(selectedX, selectedY, row, col, board);
+                Board boardClone = board.copy();
 
-                if(piece instanceof Pawn)
+                boardClone.movePiece(selectedX, selectedY, row, col, boardClone);
+
+                if(game.isKingInCheck(selectedPiece.getColor(), boardClone))
                 {
-                    Pawn pawn = (Pawn) piece; 
-                    pawn.setFirstMove(false);
-                }
-                
-                if(game.isKingInCheck(color == 'W'? 'B': 'W'))
-                {
-                    System.out.println("Check");
+                    System.out.println("INVALID MOVE, PUTS KING IN CHECK");
+                    selectedPiece = null; 
+                    selectedX = -1;
+                    selectedY = -1;
+                    updateBoard(); 
 
                 }
-                game.nextTurn();
+                else
+                {
+                    board.movePiece(selectedX, selectedY, row, col, board);
+    
+                    if(piece instanceof Pawn)
+                    {
+                        Pawn pawn = (Pawn) piece; 
+                        pawn.setFirstMove(false);
+                    }
+                    
+                    if(game.isKingInCheck(color == 'W'? 'B': 'W'))
+                    {
+                        System.out.println("Check");
+    
+                    }
+                    game.nextTurn();
+
+                }
+
             }
 
             selectedPiece = null; 
@@ -117,7 +135,6 @@ public class ChessGUI extends JFrame {
                 
                 if (piece != null) {
 
-                    // System.out.println(piece.getSprite());
                     ImageIcon icon = new ImageIcon(getClass().getResource(piece.getSprite()));
                     
                     Image img = icon.getImage().getScaledInstance(85, 85, Image.SCALE_SMOOTH);

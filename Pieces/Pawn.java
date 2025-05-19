@@ -50,4 +50,11 @@ public boolean isValidMove(int x, int y, int x2, int y2, Board board) {
 public void setFirstMove(boolean firstMove) {
     this.firstMove = firstMove;
 }
+
+@Override
+public Piece clone() {
+        Pawn copy = new Pawn(this.color);
+        copy.firstMove = this.firstMove;
+        return copy;
+    }
 }

@@ -3,7 +3,7 @@ import Game.Board;
 
 public abstract class Piece {
     
-    private char color;
+    protected char color;
     private String sprite;
     private String name;
 
@@ -38,5 +38,7 @@ public abstract class Piece {
     public String getName() {
         return name;
     }
+
+    public abstract Piece clone();
 
 }

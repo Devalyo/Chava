@@ -62,8 +62,23 @@ public class Board {
 
     }
 
-        
+    public Board copy() {
+        Board newBoard = new Board();
+        newBoard.squares = new Square[8][8];
+
+        for (int i = 0; i < 8; i++) {
+            for (int j = 0; j < 8; j++) {
+                newBoard.squares[i][j] = new Square();
+                Piece piece = this.squares[i][j].getPiece();
+                if (piece != null) {
+                    newBoard.squares[i][j].setPiece(piece.clone());
+                }
+            }
+        }
+        return newBoard;
     }
+    }
+        
 
     
 

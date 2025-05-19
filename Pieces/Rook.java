@@ -43,4 +43,10 @@ public class Rook extends Piece {
         return destinationPiece == null || destinationPiece.getColor() != this.getColor();
     }
 
+    @Override
+    public Piece clone() {
+        Rook copy = new Rook(this.color);
+        return copy;
+    }
+
 }

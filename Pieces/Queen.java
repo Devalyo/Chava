@@ -20,4 +20,10 @@ public class Queen extends Piece {
         return false; 
     }
 
+    @Override
+    public Piece clone() {
+        Queen copy = new Queen(this.color);
+        return copy;
+    }
+        
 }
